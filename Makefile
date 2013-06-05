@@ -11,9 +11,13 @@ CFLAGS=-c -mcpu=arm926ej-s -g -Wall
 LDFLAGS=
 ASFLAGS=-mcpu=arm926ej-s -g
 
-all: main test
+all: main test test-iv
 	$(BINCPY) -O binary main.elf main.bin
 	$(BINCPY) -O binary test.elf test.bin
+	$(BINCPY) -O binary test-iv.elf test-iv.bin
+
+test-iv: test-iv.o
+	$(LD) $(LDFLAGS) -T src/ld/test-iv.ld test-iv.o -o test-iv.elf	
 
 test: test.o
 	$(LD) $(LDFLAGS) -T src/ld/test.ld test.o -o test.elf	
@@ -29,6 +33,9 @@ entry.o: src/s/entry.s
 
 test.o: src/s/test.s
 	$(AS) $(ASFLAGS) src/s/test.s -o test.o
+
+test-iv.o: src/s/test-iv.s
+	$(AS) $(ASFLAGS) src/s/test-iv.s -o test-iv.o
 
 clean:
 	rm -rf *o *.elf *.bin *~
