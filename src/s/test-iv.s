@@ -1,7 +1,24 @@
 .global _Reset
+
+.equ T_MASK, 0x10
+	
 _Reset:
     ldr sp, =stack_top
-    b   _LoadStore
+    b   _Stack_Manipulation
+
+_Stack_Manipulation:
+    mov r0, #0x01
+    mov r1, #0x02
+    mov r2, #0x03
+    stmed sp!, {r0-r2}
+    ldmed sp!, {r6-r4}
+    bkpt
+	
+_Masking_CSPR:
+    mov r7, #T_MASK
+    mrs r8, cpsr
+    and r9, r8, #T_MASK
+    bkpt
 
 _Pop_Stack:
     mov pc, lr
