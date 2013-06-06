@@ -1,14 +1,9 @@
-ENTRY(_Reset)
-SECTIONS
-{
-    . = 0x0;
-    .text : {
-        entry.o (INTERRUPT_VECTOR)
-        *(.text)
-    }
-    .data : { *(.data) }
-    .bss : { *(.bss COMMON) }
-    . = ALIGN(8);
-    .  = . + 0x1000; /* 4kB of stack memory */
-    stack_top = .;
-}
+* How do we play with the cspr?
+* how do we manipulate the stack?
+* how can we push execution addresses into memory and manipulate the pc?
+* how do we do subroutines in asm? or is it all branch and return manually?
+* how do we manage (access, write, use etc.) memory addresses? instruaction addresses?
+
+Exercises:
+* Implement function calls with a stack
+* Implement a semaphore
