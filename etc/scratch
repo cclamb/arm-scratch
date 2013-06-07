@@ -3,3 +3,7 @@
 * how can we push execution addresses into memory and manipulate the pc?
 * how do we do subroutines in asm? or is it all branch and return manually?
 * how do we manage (access, write, use etc.) memory addresses? instruaction addresses?
+
+Exercises:
+* Implement function calls with a stack
+* Implement a semaphore
