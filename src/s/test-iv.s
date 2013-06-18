@@ -11,7 +11,7 @@ _Stack_Manipulation:
     mov r1, #0x02
     mov r2, #0x03
     stmed sp!, {r0-r2}
-    ldmed sp!, {r6-r4}
+    ldmed sp!, {r4-r6}
     bkpt
 	
 _Masking_CSPR:
