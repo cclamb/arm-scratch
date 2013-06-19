@@ -27,7 +27,7 @@ main: main.o entry.o
 	$(LD) $(LDFLAGS) -T src/ld/main.ld main.o entry.o -o main.elf
 
 interrupt: interrupt.o interrupt-main.o
-	$(LD) $(LDFLAGS) -T src/ld/interrupt.ld interrupt.o -o interrupt.elf
+	$(LD) $(LDFLAGS) -T src/ld/interrupt.ld interrupt.o interrupt-main.o -o interrupt.elf
 
 main.o: src/c/main.c
 	$(CC) $(CFLAGS) src/c/main.c -o main.o
@@ -49,7 +49,7 @@ interrupt-main.o:
 
 clean:
 	rm -rf *o *.elf *.bin *~
- 
+
 # CC=g++
 # CFLAGS=-c -Wall
 # LDFLAGS=
@@ -58,7 +58,7 @@ clean:
 # EXECUTABLE=hello
 
 # all: $(SOURCES) $(EXECUTABLE)
-	
+
 # $(EXECUTABLE): $(OBJECTS) 
 # 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
