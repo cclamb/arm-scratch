@@ -2,6 +2,7 @@
     .code 32
     .global vectors_start
     .global vectors_end
+    .global reset_handler
 
 vectors_start:
     ldr pc, reset_handler_addr
