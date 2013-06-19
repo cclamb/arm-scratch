@@ -7,9 +7,11 @@ BINCPY=arm-none-eabi-objcopy
 
 # Hey!, I am comment number 2. I want to say that CFLAGS will be the
 # options I'll pass to the compiler.
-CFLAGS=-c -mcpu=arm926ej-s -g -Wall
+PROCESSOR=arm926ej-s
+# PROCESSOR=arm920t
+CFLAGS=-c -mcpu=$(PROCESSOR) -g -Wall
 LDFLAGS=
-ASFLAGS=-mcpu=arm926ej-s -g
+ASFLAGS=-mcpu=$(PROCESSOR) -g
 
 all: main test test-iv interrupt
 	$(BINCPY) -O binary main.elf main.bin
