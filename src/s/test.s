@@ -23,8 +23,8 @@ Reset_Handler:
 */
 
 Move_Test:
-    r5 = 5
-    r7 = 8
+    ldr r5, =0x05
+    ldr r7, =0x08
     MOV     r7,r5
 
 

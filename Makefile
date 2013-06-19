@@ -26,7 +26,7 @@ test: test.o
 main: main.o entry.o
 	$(LD) $(LDFLAGS) -T src/ld/main.ld main.o entry.o -o main.elf
 
-interrupt: interrupt.o
+interrupt: interrupt.o interrupt-main.o
 	$(LD) $(LDFLAGS) -T src/ld/interrupt.ld interrupt.o -o interrupt.elf
 
 main.o: src/c/main.c
@@ -43,6 +43,9 @@ test-iv.o: src/s/test-iv.s
 
 interrupt.o:
 	$(AS) $(ASFLAGS) src/s/interrupt.s -o interrupt.o
+
+interrupt-main.o:
+	$(CC) $(CFLAGS) src/c/interrupt-main.c -o interrupt-main.o
 
 clean:
 	rm -rf *o *.elf *.bin *~
