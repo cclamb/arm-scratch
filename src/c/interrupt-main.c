@@ -6,6 +6,11 @@
 #define VIC_BASE_ADDR 0X10140000
 #define VIC_INTENABLE (*((volatile uint32_t *)(VIC_BASE_ADDR + 0X010)))
 
+void __attribute__ ((interrupt)) irq_handler(void) {
+    // echo the char + 1
+    UART0_DR = UART0_DR + 1;
+}
+
 void __attribute__((interrupt)) undef_handler(void) { for(;;); }
 void __attribute__((interrupt)) swi_handler(void) { for(;;); }
 void __attribute__((interrupt)) prefetch_abort_handler(void) { for(;;); }
@@ -22,9 +27,10 @@ void copy_vectors(void) {
   }
 }
 
-int main(void) {
+int c_entry(void) {
   VIC_INTENABLE = 1 << 12;
   UART0_IMSC = 1 << 4;
   for (;;) ;
   return 0;
 }
+

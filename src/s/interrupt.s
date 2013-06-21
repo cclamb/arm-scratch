@@ -6,15 +6,21 @@
 
 vectors_start:
     ldr pc, reset_handler_addr
-    b . 
-    b .
-    b .
-    b .
-    b .
-    b .
-    b .
+    ldr pc, undef_handler_addr
+    ldr pc, swi_handler_addr
+    ldr pc, prefetch_abort_handler_addr
+    ldr pc, data_abort_handler_addr
+    b   .
+    ldr pc, irq_handler_addr
+    ldr pc, fiq_handler_addr
 
-reset_handler_addr: .word reset_handler
+reset_handler_addr:             .word reset_handler
+undef_handler_addr:             .word undef_handler
+swi_handler_addr:               .word swi_handler
+prefetch_abort_handler_addr:    .word prefetch_abort_handler
+data_abort_handler_addr:        .word data_abort_handler
+irq_handler_addr:               .word irq_handler
+fiq_handler_addr:               .word fiq_handler
 
 vectors_end:
 
@@ -31,7 +37,7 @@ reset_handler:
     ldr r5, =0x05           @ some flags to test if we've come this far
     ldr r7, =0x08
     mov  r5, r7  
-    bl  main                @ jump to main and go!
+    bl  c_entry                @ jump to main and go!
     b   .  
 
 .end
