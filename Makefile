@@ -13,11 +13,32 @@ CFLAGS=-c -mcpu=$(PROCESSOR) -g -Wall
 LDFLAGS=
 ASFLAGS=-mcpu=$(PROCESSOR) -g
 
-all: main test test-iv interrupt
+all: os main test test-iv interrupt
+	$(BINCPY) -O binary os.elf os.bin
 	$(BINCPY) -O binary main.elf main.bin
 	$(BINCPY) -O binary test.elf test.bin
 	$(BINCPY) -O binary test-iv.elf test-iv.bin
 	$(BINCPY) -O binary interrupt.elf interrupt.bin
+
+os: os-main.o os-uart.o os-vector-table.o os-bootstrap.o 
+	$(LD) $(LDFLAGS) -T src/ld/os.ld \
+	os-main.o \
+	os-uart.o \
+	os-vector-table.o \
+	os-bootstrap.o \
+	-o os.elf
+
+os-main.o:
+	$(CC) $(CFLAGS) src/c/os-main.c -o os-main.o
+
+os-uart.o:
+	$(CC) $(CFLAGS) src/c/os-uart.c -o os-uart.o
+
+os-vector-table.o:
+	$(CC) $(CFLAGS) src/c/os-vector-table.c -o os-vector-table.o
+
+os-bootstrap.o:
+	$(AS) $(ASFLAGS) src/s/os-bootstrap.s -o os-bootstrap.o
 
 test-iv: test-iv.o
 	$(LD) $(LDFLAGS) -T src/ld/test-iv.ld test-iv.o -o test-iv.elf	
